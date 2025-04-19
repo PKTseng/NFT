@@ -4,9 +4,9 @@ import { defineStore } from 'pinia'
 
 export const useWalletStore = defineStore('wallet', () => {
   const connection = new Connection(clusterApiUrl('devnet'))
-  const publickey = ref<PublicKey | null>(null)
+  const publicKey = ref<PublicKey | null>(null)
 
-  const connected = computed(() => publickey.value !== null)
+  const connected = computed(() => publicKey.value !== null)
 
   const connectWallet = async () => {
     try {
@@ -17,7 +17,7 @@ export const useWalletStore = defineStore('wallet', () => {
       }
 
       const response = await solana.connect()
-      publickey.value = response.publicKey
+      publicKey.value = response.publicKey
     } catch (error) {
       console.log(error)
     }
@@ -28,7 +28,7 @@ export const useWalletStore = defineStore('wallet', () => {
       const { solana } = window
 
       await solana?.disconnect()
-      publickey.value = null
+      publicKey.value = null
     } catch (error) {
       console.log(error)
     }
@@ -36,7 +36,7 @@ export const useWalletStore = defineStore('wallet', () => {
 
   return {
     connection,
-    publickey,
+    publicKey,
     connected,
     connectWallet,
     disconnectWallet,
