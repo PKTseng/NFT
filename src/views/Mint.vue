@@ -1,6 +1,4 @@
-<template>
-  <RouterView />
-</template>
+<template>Mint</template>
 
 <script setup lang="ts"></script>
 

@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { getAssetsByOwner } from '@/api/getAssetsByOwner'
-import type { JsonRpcResponse, NftItem } from '@/types/helius'
+import type { JsonRpcResponse, NftItem } from '@/types/assetsByOwner'
 
 export const useGetAssetsByOwner = () => {
   const assets = ref<NftItem[]>([])
