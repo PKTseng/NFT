@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { getAssetsByOwner } from '@/api/getAssetsByOwner'
+import { getAssetsByOwner } from '@/api/GetAssetsByOwner'
 import type { JsonRpcResponse, NftItem } from '@/types/assetsByOwner'
 
 export const useGetAssetsByOwner = () => {
