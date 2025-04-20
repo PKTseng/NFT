@@ -1,6 +1,4 @@
-<template>
-  <div>NftDetail</div>
-</template>
+<template>series</template>
 
 <script setup lang="ts"></script>
 

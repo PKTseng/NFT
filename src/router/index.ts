@@ -22,6 +22,11 @@ const routes = [
         component: () => import('@/views/Creator.vue'),
       },
       {
+        path: '/series',
+        name: 'series',
+        component: () => import('@/views/Series.vue'),
+      },
+      {
         path: '/nft/:id',
         name: 'nft-detail',
         component: () => import('@/views/NftDetail.vue'), // NFT 詳情頁

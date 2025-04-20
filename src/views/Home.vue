@@ -7,6 +7,7 @@
       v-for="asset in assets"
       :key="asset.id"
       class="rounded-xl cursor-pointer overflow-hidden flex flex-col bg-white"
+      @click="goDetail(asset)"
     >
       <!-- 圖片 -->
       <div class="overflow-hidden rounded-t-xl h-full">
@@ -32,7 +33,7 @@
 
         <!-- 分潤比例 -->
         <p v-if="asset.royalty?.percent" class="text-gray-600">
-          Royalty: {{ (asset.royalty.percent * 100).toFixed(1) }}%
+          Royalty: {{ formatRoyaltyPercent(asset.royalty.percent) }}
         </p>
       </div>
     </div>
@@ -42,10 +43,25 @@
 </template>
 
 <script setup lang="ts">
-import { useGetAssetsByOwner } from '@/hooks/UseGetAssetsByOwner'
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useGetAssetsByOwner } from '@/hooks/UseGetAssetsByOwner'
+import { getImageUrl, formatRoyaltyPercent } from '@/utils/nft'
 
-const { assets, fetchAssetsByOwner, getImageUrl } = useGetAssetsByOwner()
+const router = useRouter()
+
+const { assets, fetchAssetsByOwner } = useGetAssetsByOwner()
+
+const goDetail = (asset: any) => {
+  console.log(asset)
+
+  router.push({
+    name: 'nft-detail',
+    params: {
+      id: asset.id,
+    },
+  })
+}
 
 onMounted(async () => {
   await fetchAssetsByOwner(1, 50)
