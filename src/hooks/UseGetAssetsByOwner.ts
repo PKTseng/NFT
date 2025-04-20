@@ -1,22 +1,28 @@
 import { ref } from 'vue'
 import { getAssetsByOwner } from '@/api/GetAssetsByOwner'
 import type { JsonRpcResponse, NftItem } from '@/types/assetsByOwner'
+import { useGlobalStore } from '@/stores/globalStore'
+
+import { data } from '@/hooks/mockData'
 
 export const useGetAssetsByOwner = () => {
+  const globalStore = useGlobalStore()
+
   const assets = ref<NftItem[]>([])
-  const loading = ref(false)
   const error = ref<string | null>(null)
   const totalAssets = ref(0)
   const currentPage = ref(1)
 
   const fetchAssetsByOwner = async (page: number = 1, limit: number = 50) => {
-    loading.value = true
+    globalStore.startLoading()
+
     error.value = null
 
     try {
-      const axiosResponse = await getAssetsByOwner(page, limit)
-      const res = axiosResponse.data as JsonRpcResponse
-
+      console.log(limit)
+      // const axiosResponse = await getAssetsByOwner(page, limit)
+      // const res = axiosResponse.data as JsonRpcResponse
+      const res = data
       if (res && res.result) {
         assets.value = res.result.items
         totalAssets.value = res.result.total
@@ -31,25 +37,7 @@ export const useGetAssetsByOwner = () => {
       error.value = err instanceof Error ? err.message : '獲取資產時發生錯誤'
       return null
     } finally {
-      loading.value = false
-    }
-  }
-
-  const getAssetById = (assetId: string): NftItem | undefined => {
-    return assets.value.find((asset) => asset.id === assetId)
-  }
-
-  const getNftContentDetails = (asset: NftItem | undefined) => {
-    if (!asset) return null
-
-    return {
-      schema: asset.content.$schema,
-      jsonUri: asset.content.json_uri,
-      files: asset.content.files.map((file) => ({
-        uri: file.uri,
-        cdnUri: file.cdn_uri,
-        mimeType: file.mime,
-      })),
+      globalStore.stopLoading()
     }
   }
 
@@ -77,27 +65,27 @@ export const useGetAssetsByOwner = () => {
 
   // 獲取圖片URL（如果有的話）
   const getImageUrl = (asset: NftItem | undefined): string | null => {
-    if (!asset || !asset.content.files || asset.content.files.length === 0) return null
+    const defaultImageUrl = 'https://placehold.co/300x300?text=No+Image&font=montserrat'
+    console.log(asset)
+    if (!asset || !asset.content.files || asset.content.files.length === 0) return defaultImageUrl
 
     // 優先使用CDN URL
-    const imageFile = asset.content.files.find((file) => file.mime.startsWith('image/') && file.cdn_uri)
+    const imageFile = asset.content.files.find((file) => file.mime.startsWith('image/') && file.uri)
 
     if (imageFile) {
-      return imageFile.cdn_uri || imageFile.uri
+      return imageFile.uri || imageFile.cdn_uri
     }
 
-    return null
+    return defaultImageUrl
   }
 
   return {
     assets,
-    loading,
     error,
     totalAssets,
     currentPage,
     fetchAssetsByOwner,
-    getAssetById,
-    getNftContentDetails,
+
     getOwnershipDetails,
     getCreatorDetails,
     getImageUrl,
