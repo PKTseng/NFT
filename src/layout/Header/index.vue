@@ -64,6 +64,6 @@ const navLinks = [
   { path: '/nft-creator', label: '創作者作品' },
   { path: '/series', label: '系列分類' },
   { path: '/mint', label: 'Mint NFT' },
-  { path: '/manage', label: '販售管理' },
+  // { path: '/manage', label: '販售管理' },
 ]
 </script>
