@@ -1,23 +1,15 @@
 <template>
-  {{ address }}
-  <button
-    v-if="!connected"
-    class="bg-gradient-to-r from-pink-500 to-yellow-500 text-white text-xl font-bold px-4 py-2 rounded-2xl shadow-lg hover:scale-110 hover:rotate-1 transition-all duration-300"
-    @click="connectWallet"
-  >
-    Connect Wallet
-  </button>
+  {{ shortenAddress(address) }}
 
-  <v-btn v-else color="primary" @click="disconnectWallet"> disconnectWallet </v-btn>
+  <v-btn color="error" class="ml-4" @click="disconnectWallet"> disconnectWallet </v-btn>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useWalletStore } from '@/stores/useWallet'
+import { shortenAddress } from '@/utils/nft'
 
 const walletStore = useWalletStore()
-
-const connected = computed(() => walletStore.connected)
 
 const address = computed(() => {
   if (!walletStore.publicKey) {
@@ -27,7 +19,6 @@ const address = computed(() => {
   return walletStore.publicKey.toString()
 })
 
-const connectWallet = () => walletStore.connectWallet()
 const disconnectWallet = () => walletStore.disconnectWallet()
 </script>
 

@@ -1,33 +1,39 @@
 <template>
   <div class="max-w-xl mx-auto">
-    <h2 class="text-xl font-bold">🔍 查詢 NFT（依照錢包地址）</h2>
-
     <div class="flex items-center gap-2">
       <v-text-field
         v-model="ownerAddress"
+        rounded
         type="text"
         density="compact"
         placeholder="輸入錢包地址（ownerAddress）"
-        class="w-full px-2 py-2"
+        class="px-2 py-2 w-[660px]"
         hide-details
         variant="outlined"
         clearable
-      >
-      </v-text-field>
+      />
 
-      <v-btn color="primary" @click="searchText">查詢</v-btn>
+      <button
+        class="bg-gradient-to-r from-pink-500 to-yellow-500 text-white text-xl font-bold px-4 py-2 rounded-2xl shadow-lg hover:scale-110 hover:rotate-1 transition-all duration-300"
+        @click="searchText"
+      >
+        Connect Wallet
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useWalletStore } from '@/stores/useWallet'
 
-const ownerAddress = ref('')
+const walletStore = useWalletStore()
+const { publicKey } = storeToRefs(walletStore)
 
-const emit = defineEmits(['handleSearch'])
+const ownerAddress = ref(null)
 
 const searchText = () => {
-  emit('handleSearch', ownerAddress.value)
+  publicKey.value = ownerAddress.value ?? null
 }
 </script>

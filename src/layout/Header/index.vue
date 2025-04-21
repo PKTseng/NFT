@@ -31,8 +31,8 @@
         </button>
 
         <!-- Wallet (Desktop) -->
-        <div class="hidden md:block ml-4">
-          <WalletConnect />
+        <div class="hidden md:block ml-4 tex-right">
+          <Wallet />
         </div>
       </div>
     </div>
@@ -48,20 +48,20 @@
       >
         {{ link.label }}
       </RouterLink>
-      <!-- Mobile 錢包連接按鈕 -->
-      <WalletConnect />
+
+      <Wallet />
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import WalletConnect from '@/components/WalletConnect.vue'
+import Wallet from './Wallet/index.vue'
 
 const isMenuOpen = ref(false)
 
 const navLinks = [
-  { path: '/nft-creator', label: '創作者作品' },
+  { path: '/creator', label: '創作者作品' },
   { path: '/series', label: '系列分類' },
   { path: '/mint', label: 'Mint NFT' },
   // { path: '/manage', label: '販售管理' },
