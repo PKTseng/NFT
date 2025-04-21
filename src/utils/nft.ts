@@ -1,6 +1,9 @@
 import type { NftItem } from '@/types/assetsByOwner' // 根據你的實際類型路徑調整
+import type { AssetData } from '@/types/assets'
 
-export const getImageUrl = (asset: NftItem | undefined): string => {
+export const getImageUrl = (asset: NftItem | AssetData | undefined): string => {
+  // console.log(asset)
+
   const defaultImageUrl = 'https://placehold.co/300x300?text=No+Image&font=montserrat'
 
   if (!asset || !asset.content.files || asset.content.files.length === 0) return defaultImageUrl
