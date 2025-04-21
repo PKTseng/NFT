@@ -105,12 +105,12 @@
                 <li
                   v-for="(auth, index) in asset.authorities"
                   :key="index"
-                  class="flex items-center justify-between bg-gray-50 p-2 rounded"
+                  class="flex items-center justify-between bg-gray-50 pa-2 rounded"
                 >
                   <span class="text-gray-600 font-mono break-all" :title="auth.address">
                     {{ shortenAddress(auth.address) }}
                   </span>
-                  <span class="ml-2 px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded">
+                  <span class="ml-2 px-2 py-0.5 text-md bg-blue-100 text-blue-800 rounded">
                     {{ auth.scopes.join(', ') }}
                   </span>
                 </li>
@@ -163,6 +163,8 @@
                 </li>
               </ul>
             </div>
+
+            <!-- <TransferRecord /> -->
           </div>
 
           <!-- Footer Info -->
@@ -173,6 +175,7 @@
       </div>
     </div>
   </div>
+
   <div v-else class="text-center py-10 text-gray-500">Loading asset data...</div>
 </template>
 
@@ -180,13 +183,16 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAssetsBySearch } from '@/hooks/UseSearchAssets'
+import { useSignaturesForAsset } from '@/hooks/UseGetSignaturesForAsset'
 import DetailItem from '@/components/DetailItem.vue'
 import { getImageUrl, shortenAddress } from '@/utils/nft'
+// import TransferRecord from '@/components/TransferRecord.vue'
 
 const route = useRoute()
 const router = useRouter()
 
 const { asset, fetchAssetsBySearch } = useAssetsBySearch()
+const { recordList, fetchSignaturesForAsset } = useSignaturesForAsset()
 
 const imageLoadError = ref(false)
 
@@ -243,6 +249,9 @@ onMounted(async () => {
   if (!route.params.id) return
 
   await fetchAssetsBySearch(`${route.params.id}`)
-  console.log(asset)
+
+  await fetchSignaturesForAsset(`${route.params.id}`)
+
+  console.log(recordList.value)
 })
 </script>
