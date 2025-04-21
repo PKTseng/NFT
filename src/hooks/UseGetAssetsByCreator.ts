@@ -1,11 +1,11 @@
 import { ref } from 'vue'
-import { getAssetsByOwner } from '@/api/GetAssetsByOwner'
+import { getAssetsByCreator } from '@/api/GetAssetsByCreator'
 import type { JsonRpcResponse, NftItem } from '@/types/assetsByOwner'
 import { useGlobalStore } from '@/stores/globalStore'
 
-// import { data } from '@/hooks/mockData'
+// import { data } from '@/hooks/UseGetAssetsByCreatorMockData'
 
-export const useGetAssetsByOwner = () => {
+export const useGetAssetsByCreator = () => {
   const globalStore = useGlobalStore()
 
   const assets = ref<NftItem[]>([])
@@ -13,14 +13,14 @@ export const useGetAssetsByOwner = () => {
   const totalAssets = ref(0)
   const currentPage = ref(1)
 
-  const fetchAssetsByOwner = async (page: number = 1, limit: number = 50) => {
+  const fetchAssetsByCreator = async (page: number = 1, limit: number = 50) => {
     globalStore.startLoading()
 
     error.value = null
 
     try {
       // console.log(limit)
-      const axiosResponse = await getAssetsByOwner(page, limit)
+      const axiosResponse = await getAssetsByCreator(page, limit)
       const res = axiosResponse.data as JsonRpcResponse
       // const res = data
       if (res && res.result) {
@@ -41,28 +41,11 @@ export const useGetAssetsByOwner = () => {
     }
   }
 
-  // 獲取圖片URL（如果有的話）
-  const getImageUrl = (asset: NftItem | undefined): string | null => {
-    const defaultImageUrl = 'https://placehold.co/300x300?text=No+Image&font=montserrat'
-
-    if (!asset || !asset.content.files || asset.content.files.length === 0) return defaultImageUrl
-
-    // 優先使用CDN URL
-    const imageFile = asset.content.files.find((file) => file.mime.startsWith('image/') && file.uri)
-
-    if (imageFile) {
-      return imageFile.uri || imageFile.cdn_uri
-    }
-
-    return defaultImageUrl
-  }
-
   return {
     assets,
     error,
     totalAssets,
     currentPage,
-    fetchAssetsByOwner,
-    getImageUrl,
+    fetchAssetsByCreator,
   }
 }
