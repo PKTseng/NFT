@@ -8,11 +8,14 @@
         type="text"
         density="compact"
         placeholder="輸入錢包地址（ownerAddress）"
-        class="w-full px-4 py-2 border rounded"
+        class="w-full px-2 py-2"
         hide-details
         variant="outlined"
-      />
-      <v-btn class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700" @click="searchText">查詢</v-btn>
+        clearable
+      >
+      </v-text-field>
+
+      <v-btn color="primary" @click="searchText">查詢</v-btn>
     </div>
   </div>
 </template>
