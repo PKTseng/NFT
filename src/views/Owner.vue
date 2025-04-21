@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted, nextTick } from 'vue'
+import { watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGetAssetsByOwner } from '@/hooks/UseGetAssetsByOwner'
 import { useWalletStore } from '@/stores/useWallet'
@@ -105,6 +105,4 @@ const goDetail = (asset: NftItem) => {
     },
   })
 }
-
-onMounted(loadAssets)
 </script>
