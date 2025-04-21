@@ -163,8 +163,6 @@
                 </li>
               </ul>
             </div>
-
-            <!-- <TransferRecord /> -->
           </div>
 
           <!-- Footer Info -->
@@ -183,16 +181,13 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAssetsBySearch } from '@/hooks/UseSearchAssets'
-import { useSignaturesForAsset } from '@/hooks/UseGetSignaturesForAsset'
 import DetailItem from '@/components/DetailItem.vue'
 import { getImageUrl, shortenAddress } from '@/utils/nft'
-// import TransferRecord from '@/components/TransferRecord.vue'
 
 const route = useRoute()
 const router = useRouter()
 
 const { asset, fetchAssetsBySearch } = useAssetsBySearch()
-const { recordList, fetchSignaturesForAsset } = useSignaturesForAsset()
 
 const imageLoadError = ref(false)
 
@@ -249,9 +244,5 @@ onMounted(async () => {
   if (!route.params.id) return
 
   await fetchAssetsBySearch(`${route.params.id}`)
-
-  await fetchSignaturesForAsset(`${route.params.id}`)
-
-  console.log(recordList.value)
 })
 </script>
