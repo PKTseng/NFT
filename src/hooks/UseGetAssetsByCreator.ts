@@ -3,7 +3,7 @@ import { getAssetsByCreator } from '@/api/GetAssetsByCreator'
 import type { JsonRpcResponse, NftItem } from '@/types/assetsByOwner'
 import { useGlobalStore } from '@/stores/globalStore'
 
-// import { data } from '@/hooks/UseGetAssetsByCreatorMockData'
+import { data } from '@/mocks/Creator'
 
 export const useGetAssetsByCreator = () => {
   const globalStore = useGlobalStore()
@@ -19,17 +19,16 @@ export const useGetAssetsByCreator = () => {
     error.value = null
 
     try {
-      // console.log(limit)
       const axiosResponse = await getAssetsByCreator(page, limit)
       const res = axiosResponse.data as JsonRpcResponse
+
       // const res = data
+      // console.log(res)
       if (res && res.result) {
         assets.value = res.result.items
         totalAssets.value = res.result.total
         currentPage.value = page
       }
-
-      // console.log(res)
 
       return res
     } catch (err) {
