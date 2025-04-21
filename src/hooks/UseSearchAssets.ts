@@ -1,36 +1,31 @@
 import { ref } from 'vue'
 import { getSearchAssets } from '@/api/SearchAssets'
-import type { JsonRpcResponse, NftItem } from '@/types/assetsByOwner'
+import type { AssetData } from '@/types/assets'
 import { useGlobalStore } from '@/stores/globalStore'
 
-import { data } from '@/mocks/Assets'
+// import { data } from '@/mocks/Assets'
 
-export const useGetSearchAssets = () => {
+export const useAssetsBySearch = () => {
   const globalStore = useGlobalStore()
 
-  const assets = ref<NftItem[]>([])
+  const asset = ref<AssetData | null>(null)
   const error = ref<string | null>(null)
-  const totalAssets = ref(0)
-  const currentPage = ref(1)
 
-  const fetchAssetsBySearch = async (ownerAddress: string, page: number = 1, limit: number = 50) => {
+  const fetchAssetsBySearch = async (id: string) => {
     globalStore.startLoading()
 
     error.value = null
 
     try {
-      // const axiosResponse = await getSearchAssets(ownerAddress, page, limit)
-      // const res = axiosResponse.data as JsonRpcResponse
+      const response = await getSearchAssets(id)
+      const res = response.data.result as AssetData
       // console.log(res)
 
-      const res = data
-      if (res && res.result) {
-        assets.value = res.result.items
-        totalAssets.value = res.result.total
-        currentPage.value = page
-      }
+      // const res = data as AssetData
 
-      console.log(res)
+      if (res) {
+        asset.value = res
+      }
 
       return res
     } catch (err) {
@@ -42,28 +37,9 @@ export const useGetSearchAssets = () => {
     }
   }
 
-  // 獲取圖片URL（如果有的話）
-  const getImageUrl = (asset: NftItem | undefined): string | null => {
-    const defaultImageUrl = 'https://placehold.co/300x300?text=No+Image&font=montserrat'
-
-    if (!asset || !asset.content.files || asset.content.files.length === 0) return defaultImageUrl
-
-    // 優先使用CDN URL
-    const imageFile = asset.content.files.find((file) => file.mime.startsWith('image/') && file.uri)
-
-    if (imageFile) {
-      return imageFile.uri || imageFile.cdn_uri
-    }
-
-    return defaultImageUrl
-  }
-
   return {
-    assets,
+    asset,
     error,
-    totalAssets,
-    currentPage,
     fetchAssetsBySearch,
-    getImageUrl,
   }
 }

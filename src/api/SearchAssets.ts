@@ -2,17 +2,12 @@ import { axiosIns } from '@/utils/request'
 
 const API_KEY = import.meta.env.VITE_APP_API_KEY
 
-export const getSearchAssets = (ownerAddress: string, page: number = 1, limit: number = 50) => {
+export const getSearchAssets = (id: string) => {
   const payload = {
     jsonrpc: '2.0',
-    id: 'my-id',
-    method: 'searchAssets',
-    params: {
-      ownerAddress,
-      tokenType: 'all',
-      page,
-      limit,
-    },
+    id: 'test',
+    method: 'getAsset',
+    params: { id },
   }
 
   return axiosIns.post(`?api-key=${API_KEY}`, payload)
