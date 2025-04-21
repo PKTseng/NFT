@@ -10,7 +10,7 @@ export const useGetAssetsByOwner = () => {
 
   const assets = ref<NftItem[]>([])
   const error = ref<string | null>(null)
-  const totalAssets = ref(0)
+  const totalAssets = ref(20)
   const currentPage = ref(1)
 
   const fetchAssetsByOwner = async (ownerAddress: string, page: number = 1, limit: number = 50) => {
@@ -21,9 +21,9 @@ export const useGetAssetsByOwner = () => {
     try {
       const axiosResponse = await getAssetsByOwner(ownerAddress, page, limit)
       const res = axiosResponse.data as JsonRpcResponse
-      // console.log(res)
 
       // const res = data
+      // console.log(res)
       if (res && res.result) {
         assets.value = res.result.items
         totalAssets.value = res.result.total

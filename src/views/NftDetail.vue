@@ -4,11 +4,11 @@
     <div class="bg-white overflow-hidden">
       <div class="md:flex px-2">
         <!-- Image Section -->
-        <div class="md:w-1/3 p-4 flex justify-center items-center">
+        <div class="md:w-1/3 pa-4 flex justify-center items-start">
           <img
             :src="imageUrl"
             :alt="asset.content?.metadata?.name || 'Asset Image'"
-            class="h-full w-full object-contain rounded-2xl"
+            class="object-contain rounded-2xl"
             @error="onImageError"
           />
         </div>
