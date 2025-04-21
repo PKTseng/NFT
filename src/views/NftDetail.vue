@@ -1,6 +1,6 @@
 <template>
   <v-btn color="primary" class="mb-4" @click="goOwner">回上一頁</v-btn>
-  <div v-if="asset" class="mx-auto sm:p-6 lg:p-4">
+  <div v-if="asset" class="mx-auto sm:p-6 lg:p-4 min-h-screen">
     <div class="bg-white overflow-hidden">
       <div class="md:flex px-2">
         <!-- Image Section -->

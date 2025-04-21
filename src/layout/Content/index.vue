@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="bg-gray-100 dark:bg-gray-800">
     <router-view />
   </v-container>
 </template>
