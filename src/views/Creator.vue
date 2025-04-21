@@ -2,7 +2,7 @@
   <div class="min-h-screen">
     <v-data-table class="mt-5 elevation-3" :headers="viewHeader" :items="searchTable" items-per-page="50">
       <template #[`item.image`]="{ item }">
-        <img :src="item.image" alt="asset image" class="object-cover w-full h-full" />
+        <img v-if="item.image" :src="item.image" alt="asset image" class="object-cover w-full h-full" />
       </template>
 
       <template #[`item.description`]="{ item }">
