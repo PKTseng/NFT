@@ -1,6 +1,4 @@
 <template>
-  <NftSearch @handleSearch="handleSearch" />
-
   <div
     v-if="assets.length > 0"
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 min-h-screen mt-4"
@@ -50,7 +48,6 @@ import { useRouter } from 'vue-router'
 import { useGetAssetsByOwner } from '@/hooks/UseGetAssetsByOwner'
 import { useWalletStore } from '@/stores/useWallet'
 import { getImageUrl, formatRoyaltyPercent } from '@/utils/nft'
-import NftSearch from '@/components/NftSearch.vue'
 
 const walletStore = useWalletStore()
 
@@ -79,11 +76,5 @@ const goDetail = (asset: any) => {
       id: asset.id,
     },
   })
-}
-
-const handleSearch = async (value: string) => {
-  if (!value) return
-
-  await fetchAssetsByOwner(value, 1, 50)
 }
 </script>
