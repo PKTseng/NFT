@@ -6,7 +6,7 @@
         rounded
         type="text"
         density="compact"
-        placeholder="輸入錢包地址（ownerAddress）"
+        placeholder="錢包地址"
         class="px-2 py-2 w-[660px]"
         hide-details
         variant="outlined"
