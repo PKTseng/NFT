@@ -1,7 +1,7 @@
 <template>
-  <main class="pa-6 h-full">
+  <v-container fluid>
     <router-view />
-  </main>
+  </v-container>
 </template>
 
 <script setup lang="ts"></script>
