@@ -19,7 +19,7 @@
       </div>
 
       <!-- 資訊 -->
-      <div class="flex flex-col justify-between bg-gray-100 pa-4 h-[200px]">
+      <div class="flex flex-col justify-between bg-white pa-4 h-[200px]">
         <!-- 名稱 -->
         <p class="font-bold text-xl">{{ asset.content.metadata.name }}</p>
 
@@ -68,8 +68,6 @@ const router = useRouter()
 const { assets, fetchAssetsByOwner } = useGetAssetsByOwner()
 
 const goDetail = (asset: any) => {
-  console.log(asset)
-
   router.push({
     name: 'nft-detail',
     params: {

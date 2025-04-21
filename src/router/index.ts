@@ -30,7 +30,6 @@ const routes = [
         path: '/nft/:id',
         name: 'nft-detail',
         component: () => import('@/views/NftDetail.vue'), // NFT 詳情頁
-        props: true,
       },
       {
         path: '/mint',
