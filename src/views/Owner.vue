@@ -1,7 +1,9 @@
 <template>
+  <NftSearch @handleSearch="handleSearch" />
+
   <div
     v-if="assets.length > 0"
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 min-h-screen"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 min-h-screen mt-4"
   >
     <div
       v-for="asset in assets"
@@ -39,14 +41,30 @@
     </div>
   </div>
 
-  <div v-else>沒有找到NFT資產</div>
+  <div v-else class="min-h-screen max-w-xl mx-auto">沒有找到NFT資產</div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGetAssetsByOwner } from '@/hooks/UseGetAssetsByOwner'
+import { useWalletStore } from '@/stores/useWallet'
 import { getImageUrl, formatRoyaltyPercent } from '@/utils/nft'
+import NftSearch from '@/components/NftSearch.vue'
+
+const walletStore = useWalletStore()
+
+watch(
+  () => walletStore.publicKey,
+  async (newPublicKey) => {
+    if (newPublicKey) {
+      const address = newPublicKey.toString()
+
+      await fetchAssetsByOwner(address, 1, 50)
+    }
+  },
+  { immediate: true },
+)
 
 const router = useRouter()
 
@@ -63,7 +81,9 @@ const goDetail = (asset: any) => {
   })
 }
 
-onMounted(async () => {
-  await fetchAssetsByOwner(1, 50)
-})
+const handleSearch = async (value: string) => {
+  if (!value) return
+
+  await fetchAssetsByOwner(value, 1, 50)
+}
 </script>

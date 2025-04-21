@@ -9,16 +9,16 @@ const routes = [
       {
         path: '',
         name: 'default',
-        redirect: '/home',
+        redirect: '/owner',
       },
       {
-        path: '/home',
-        name: 'home',
-        component: () => import('@/views/Home.vue'), // NFT 列表
+        path: '/owner',
+        name: 'owner',
+        component: () => import('@/views/Owner.vue'), // NFT 列表
       },
       {
-        path: '/nft-creator',
-        name: 'nft-creator',
+        path: '/creator',
+        name: 'creator',
         component: () => import('@/views/Creator.vue'),
       },
       {
