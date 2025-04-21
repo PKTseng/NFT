@@ -25,6 +25,25 @@ export default defineConfigWithVueTs(
       'vue/multi-word-component-names': 'off',
       'no-unused-vars': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
+      'vue/attributes-order': [
+        'error',
+        {
+          order: [
+            'DEFINITION',
+            'CONDITIONALS',
+            'LIST_RENDERING',
+            'RENDER_MODIFIERS',
+            'GLOBAL',
+            ['UNIQUE', 'SLOT'],
+            'TWO_WAY_BINDING',
+            'OTHER_DIRECTIVES',
+            'OTHER_ATTR',
+            'EVENTS',
+            'CONTENT',
+          ],
+          alphabetical: false, // 按照字母順序
+        },
+      ],
     },
   },
 )
