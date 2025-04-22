@@ -1,6 +1,12 @@
 <template>
   <div class="min-h-screen">
-    <v-data-table class="mt-5 elevation-3" :headers="viewHeader" :items="searchTable" items-per-page="50">
+    <v-data-table
+      class="mt-5 elevation-3"
+      :headers="viewHeader"
+      :items="searchTable"
+      items-per-page="50"
+      hide-default-footer
+    >
       <template #[`item.image`]="{ item }">
         <img v-if="item.image" :src="item.image" alt="asset image" class="object-cover w-full h-full" />
       </template>
@@ -28,15 +34,22 @@
       </template>
     </v-data-table>
   </div>
+
+  <div class="flex justify-center items-center col-span-full mt-4">
+    <Pagination v-model="currentPage" :total-pages="totalAssets" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, nextTick, watch } from 'vue'
 import { VDataTable } from 'vuetify/components'
+import Pagination from '@/components/Pagination.vue'
 import { useGetAssetsByCreator } from '@/hooks/UseGetAssetsByCreator'
+import { useWalletStore } from '@/stores/useWallet'
 import { getImageUrl, formatRoyaltyPercent, shortenAddress, truncateText } from '@/utils/nft'
 
-const { assets, fetchAssetsByCreator } = useGetAssetsByCreator()
+const walletStore = useWalletStore()
+const { assets, currentPage, totalAssets, fetchAssetsByCreator } = useGetAssetsByCreator()
 
 const viewHeader: VDataTable['$props']['headers'] = [
   { title: '名稱', key: 'name', align: 'start' },
@@ -80,9 +93,40 @@ const searchTable = computed(() => {
   })
 })
 
-onMounted(async () => {
-  await fetchAssetsByCreator(1, 50)
-})
+const loadAssets = async () => {
+  try {
+    const address = walletStore.publicKey?.toString()
+    if (!address) return
+
+    await fetchAssetsByCreator(address, currentPage.value, totalAssets.value)
+  } catch (err) {
+    console.error('Failed to load assets:', err)
+  }
+}
+
+watch(
+  () => currentPage.value,
+  async (newPage) => {
+    if (walletStore.publicKey) {
+      await fetchAssetsByCreator(walletStore.publicKey.toString(), newPage, totalAssets.value)
+      await nextTick()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  },
+)
+
+watch(
+  () => walletStore.publicKey,
+  async (newPublicKey) => {
+    if (newPublicKey) {
+      currentPage.value = 1
+      await loadAssets()
+    } else {
+      assets.value = []
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <style lang="scss" scoped></style>

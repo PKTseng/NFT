@@ -46,7 +46,7 @@
     </div>
   </div>
 
-  <div v-else class="min-h-screen max-w-xl mx-auto">沒有找到NFT資產</div>
+  <div v-else class="min-h-screen mx-auto text-amber-50 text-center">沒有找到 NFT 資產</div>
 </template>
 
 <script setup lang="ts">

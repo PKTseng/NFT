@@ -10,16 +10,15 @@ export const useGetAssetsByCreator = () => {
 
   const assets = ref<NftItem[]>([])
   const error = ref<string | null>(null)
-  const totalAssets = ref(0)
+  const totalAssets = ref(20)
   const currentPage = ref(1)
 
-  const fetchAssetsByCreator = async (page: number = 1, limit: number = 50) => {
+  const fetchAssetsByCreator = async (creatorAddress: string, page: number = 1, limit: number = 50) => {
     globalStore.startLoading()
-
     error.value = null
 
     try {
-      const axiosResponse = await getAssetsByCreator(page, limit)
+      const axiosResponse = await getAssetsByCreator(creatorAddress, page, limit)
       const res = axiosResponse.data as JsonRpcResponse
 
       // const res = data
