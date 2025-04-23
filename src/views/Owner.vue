@@ -15,18 +15,17 @@
             :src="getImageUrl(asset) ?? ''"
             alt="asset image"
             class="transition-transform duration-300 hover:scale-125 object-cover w-full h-full"
+            loading="lazy"
           />
         </div>
 
         <!-- 資訊 -->
         <div class="flex flex-col justify-between bg-white pa-4 h-[200px]">
           <!-- 名稱 -->
-          <p class="font-bold text-xl">{{ asset.content.metadata.name }}</p>
+          <p class="font-bold text-xl text-ellipsis line-clamp-2">{{ asset.content.metadata.name }}</p>
 
           <!-- Collection 名稱 -->
-          <p class="text-gray-600">
-            Collection: {{ asset.grouping?.[0]?.collection_metadata?.name || 'Uncategorized' }}
-          </p>
+          <p class="text-gray-600">Collection: {{ asset.grouping?.[0]?.collection_metadata?.name || 'N/A' }}</p>
 
           <!-- 擁有者地址 -->
           <p class="text-gray-600">
