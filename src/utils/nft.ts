@@ -31,3 +31,9 @@ export const truncateText = (text: string | undefined, maxLength = 50): string =
   if (!text) return ''
   return text.length <= maxLength ? text : `${text.slice(0, maxLength)}...`
 }
+
+export const formatNumber = (raw?: number, decimals?: number): string => {
+  if (raw == null || decimals == null) return 'N/A'
+  const value = raw / Math.pow(10, decimals)
+  return new Intl.NumberFormat().format(value)
+}
