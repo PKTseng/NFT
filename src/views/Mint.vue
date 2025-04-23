@@ -194,18 +194,11 @@ onMounted(() => {
         </div>
         <div v-else class="flex items-center gap-2">
           <div class="w-3 h-3 rounded-full bg-red-500"></div>
-          <span>錢包未連接</span>
+          <span class="text-yellow">錢包未連接 !</span>
         </div>
       </div>
 
-      <button
-        v-if="!walletConnected"
-        class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 disabled:bg-purple-300"
-        :disabled="loading"
-        @click="connectWallet"
-      >
-        連接 Phantom 錢包
-      </button>
+      <v-btn v-if="!walletConnected" :disabled="loading" rounded @click="connectWallet"> 連接 Phantom 錢包 </v-btn>
     </div>
 
     <!-- 操作日誌 -->
