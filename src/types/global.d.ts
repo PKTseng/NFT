@@ -1,5 +1,5 @@
 interface PhantomProvider {
-  isPhantom?: boolean
+  isPhantom: boolean
   publicKey?: { toString(): string }
   isConnected?: boolean
   signTransaction: (transaction: any) => Promise<any>
