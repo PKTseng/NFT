@@ -88,6 +88,7 @@ watch(
   async (newPublicKey) => {
     if (newPublicKey) {
       currentPage.value = 1
+      totalAssets.value = 20
       await loadAssets()
     } else {
       assets.value = []
