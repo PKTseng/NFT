@@ -1,8 +1,73 @@
+<template>
+  <div class="flex flex-col gap-4 p-4">
+    <!-- 錢包連接狀態 -->
+    <div class="flex items-center gap-2 mb-4">
+      <div class="flex-1">
+        <div v-if="walletConnected" class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          <span class="font-medium text-white">錢包已連接</span>
+          <span class="text-gray-500 truncate max-w-xs">{{ walletAddress }}</span>
+        </div>
+        <div v-else class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-red-500"></div>
+          <span class="text-yellow">錢包未連接 !</span>
+        </div>
+      </div>
+
+      <v-btn v-if="!walletConnected" :disabled="loading" rounded @click="connectWallet"> 連接 Phantom 錢包 </v-btn>
+    </div>
+
+    <!-- 操作日誌 -->
+    <div class="mt-2 p-3 bg-gray-800 text-green-400 rounded font-mono text-sm max-h-40 overflow-y-auto">
+      <div v-for="(status, index) in statusMessages" :key="index" class="mb-1">
+        <span class="text-gray-500">[{{ status.time }}]</span> {{ status.message }}
+      </div>
+      <div v-if="statusMessages.length === 0" class="text-gray-500">等待操作...</div>
+    </div>
+
+    <!-- 按鈕區域 -->
+    <div class="flex flex-wrap gap-4 mt-2">
+      <v-btn color="primary" class="px-4 py-2" rounded :disabled="loading || !walletConnected" @click="onMint">
+        {{ loading ? `Minting (${retryCount}/${maxRetries})...` : 'Mint NFT' }}
+      </v-btn>
+
+      <v-btn color="primary" rounded :disabled="loading || !walletConnected" @click="fetchMyNfts">
+        查看我的所有 NFT
+      </v-btn>
+
+      <v-btn v-if="error" rounded color="warning" @click="clearError"> 清除錯誤 </v-btn>
+    </div>
+
+    <!-- 錯誤提示 -->
+    <div v-if="error" class="mt-4 p-3 bg-red-900 border border-red-700 text-white rounded">
+      <div class="font-bold mb-1">錯誤</div>
+      {{ error }}
+    </div>
+
+    <!-- Mint 成功提示 -->
+    <div v-if="mintAddress" class="mt-4 p-3 bg-green-900 border border-green-700 text-white rounded">
+      <p class="font-medium">NFT 成功鑄造！</p>
+      <p class="break-all text-sm">地址: {{ mintAddress }}</p>
+    </div>
+
+    <!-- NFT 詳情 -->
+    <div v-if="nftDetails" class="mt-4 p-4 border border-gray-700 rounded">
+      <h3 class="text-lg font-bold text-white">最新 NFT 詳情</h3>
+      <pre class="bg-gray-900 p-2 mt-2 overflow-auto max-h-60 text-xs text-gray-300 rounded">{{
+        JSON.stringify(nftDetails, null, 2)
+      }}</pre>
+    </div>
+
+    <NftList :assets="myNfts" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { mintNft } from '@/utils/mint'
 import { getSearchAssets } from '@/api/SearchAssets'
 import { getAssetsByOwner } from '@/api/GetAssetsByOwner'
+import NftList from '@/components/NftList.vue'
 
 // 錢包狀態
 const walletConnected = ref(false)
@@ -181,65 +246,3 @@ onMounted(() => {
   }
 })
 </script>
-
-<template>
-  <div class="flex flex-col gap-4 p-4">
-    <!-- 錢包連接狀態 -->
-    <div class="flex items-center gap-2 mb-4">
-      <div class="flex-1">
-        <div v-if="walletConnected" class="flex items-center gap-2">
-          <div class="w-3 h-3 rounded-full bg-green-500"></div>
-          <span class="font-medium text-white">錢包已連接</span>
-          <span class="text-gray-500 truncate max-w-xs">{{ walletAddress }}</span>
-        </div>
-        <div v-else class="flex items-center gap-2">
-          <div class="w-3 h-3 rounded-full bg-red-500"></div>
-          <span class="text-yellow">錢包未連接 !</span>
-        </div>
-      </div>
-
-      <v-btn v-if="!walletConnected" :disabled="loading" rounded @click="connectWallet"> 連接 Phantom 錢包 </v-btn>
-    </div>
-
-    <!-- 操作日誌 -->
-    <div class="mt-2 p-3 bg-gray-800 text-green-400 rounded font-mono text-sm max-h-40 overflow-y-auto">
-      <div v-for="(status, index) in statusMessages" :key="index" class="mb-1">
-        <span class="text-gray-500">[{{ status.time }}]</span> {{ status.message }}
-      </div>
-      <div v-if="statusMessages.length === 0" class="text-gray-500">等待操作...</div>
-    </div>
-
-    <!-- 按鈕區域 -->
-    <div class="flex flex-wrap gap-4 mt-2">
-      <v-btn color="primary" class="px-4 py-2" rounded :disabled="loading || !walletConnected" @click="onMint">
-        {{ loading ? `Minting (${retryCount}/${maxRetries})...` : 'Mint NFT' }}
-      </v-btn>
-
-      <v-btn color="primary" rounded :disabled="loading || !walletConnected" @click="fetchMyNfts">
-        查看我的所有 NFT
-      </v-btn>
-
-      <v-btn v-if="error" rounded color="warning" @click="clearError"> 清除錯誤 </v-btn>
-    </div>
-
-    <!-- 錯誤提示 -->
-    <div v-if="error" class="mt-4 p-3 bg-red-900 border border-red-700 text-white rounded">
-      <div class="font-bold mb-1">錯誤</div>
-      {{ error }}
-    </div>
-
-    <!-- Mint 成功提示 -->
-    <div v-if="mintAddress" class="mt-4 p-3 bg-green-900 border border-green-700 text-white rounded">
-      <p class="font-medium">NFT 成功鑄造！</p>
-      <p class="break-all text-sm">地址: {{ mintAddress }}</p>
-    </div>
-
-    <!-- NFT 詳情 -->
-    <div v-if="nftDetails" class="mt-4 p-4 border border-gray-700 rounded">
-      <h3 class="text-lg font-bold text-white">最新 NFT 詳情</h3>
-      <pre class="bg-gray-900 p-2 mt-2 overflow-auto max-h-60 text-xs text-gray-300 rounded">{{
-        JSON.stringify(nftDetails, null, 2)
-      }}</pre>
-    </div>
-  </div>
-</template>

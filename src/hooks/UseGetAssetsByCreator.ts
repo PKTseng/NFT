@@ -1,14 +1,15 @@
 import { ref } from 'vue'
 import { getAssetsByCreator } from '@/api/GetAssetsByCreator'
-import type { JsonRpcResponse, NftItem } from '@/types/assetsByOwner'
+import type { JsonRpcResponse } from '@/types/assetsByOwner'
 import { useGlobalStore } from '@/stores/globalStore'
+import type { AssetData } from '@/types/assets'
 
 import { data } from '@/mocks/Creator'
 
 export const useGetAssetsByCreator = () => {
   const globalStore = useGlobalStore()
 
-  const assets = ref<NftItem[]>([])
+  const assets = ref<AssetData[]>([])
   const error = ref<string | null>(null)
   const totalAssets = ref(20)
   const currentPage = ref(1)

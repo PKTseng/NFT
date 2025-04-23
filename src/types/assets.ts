@@ -1,5 +1,5 @@
 export interface AssetData {
-  interface: 'FungibleToken'
+  interface: string
   id: string
   content: {
     $schema: string
