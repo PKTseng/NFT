@@ -2,12 +2,11 @@ import { Metaplex, walletAdapterIdentity } from '@metaplex-foundation/js'
 import { Connection, clusterApiUrl, LAMPORTS_PER_SOL } from '@solana/web3.js'
 
 // 使用外部 URI 的 NFT 鑄造
-export async function mintNft(wallet: any) {
+export const mintNft = async (wallet: any) => {
   console.log('開始 NFT 鑄造過程 (外部 URI 方案)...')
 
   try {
-    // 使用 devnet 連接
-    const connection = new Connection(clusterApiUrl('devnet'))
+    const connection = new Connection(clusterApiUrl('devnet')) // 使用 devnet 連接
 
     if (!wallet || !wallet.publicKey) {
       console.error('未提供有效錢包')
@@ -45,18 +44,5 @@ export async function mintNft(wallet: any) {
     return nft.address.toBase58()
   } catch (e) {
     console.error('NFT 鑄造過程中出錯:', e)
-
-    if (e.message) {
-      console.error('錯誤訊息:', e.message)
-
-      // 檢查是否是常見的 Solana 錯誤
-      if (e.message.includes('0x1')) {
-        console.error('這可能是網絡擁堵或餘額不足導致')
-      } else if (e.message.includes('URI too long')) {
-        console.error('元數據 URI 太長，Solana 不接受')
-      }
-    }
-
-    throw new Error(`NFT 鑄造失敗: ${e.message || '未知錯誤'}`)
   }
 }
