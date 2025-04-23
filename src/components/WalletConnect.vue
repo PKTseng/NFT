@@ -1,7 +1,7 @@
 <template>
   {{ shortenAddress(address) }}
 
-  <v-btn color="error" class="ml-4" @click="disconnectWallet"> disconnectWallet </v-btn>
+  <v-btn color="error" class="ml-4" rounded @click="disconnectWallet"> disconnectWallet </v-btn>
 </template>
 
 <script setup lang="ts">
