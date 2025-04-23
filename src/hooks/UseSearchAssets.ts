@@ -19,9 +19,9 @@ export const useAssetsBySearch = () => {
     try {
       const response = await getSearchAssets(id)
       const res = response.data.result as AssetData
-      // console.log(res)
 
       // const res = data as AssetData
+      // console.log(res)
 
       if (res) {
         asset.value = res
