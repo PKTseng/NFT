@@ -38,7 +38,20 @@ export interface AssetData {
     seq: number
     leaf_id: number
   }
-  grouping: unknown[] // 如果你之後會用到 grouping 資料，建議補上具體型別
+  grouping: [
+    {
+      group_key: string
+      group_value: string
+      verified: boolean
+      collection_metadata: {
+        name: string
+        symbol: string
+        image: string
+        description: string
+        external_url: string
+      }
+    },
+  ]
   royalty: {
     royalty_model: string
     target: string | null
