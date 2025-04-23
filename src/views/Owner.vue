@@ -52,7 +52,7 @@
 import { watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGetAssetsByOwner } from '@/hooks/UseGetAssetsByOwner'
-import { useWalletStore } from '@/stores/useWallet'
+import { useWalletStore } from '@/stores/walletStore'
 import { getImageUrl, formatRoyaltyPercent } from '@/utils/nft'
 import type { NftItem } from '@/types/assetsByOwner'
 import Pagination from '@/components/Pagination.vue'

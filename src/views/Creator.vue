@@ -45,7 +45,7 @@ import { computed, ref, nextTick, watch } from 'vue'
 import { VDataTable } from 'vuetify/components'
 import Pagination from '@/components/Pagination.vue'
 import { useGetAssetsByCreator } from '@/hooks/UseGetAssetsByCreator'
-import { useWalletStore } from '@/stores/useWallet'
+import { useWalletStore } from '@/stores/walletStore'
 import { getImageUrl, formatRoyaltyPercent, shortenAddress, truncateText } from '@/utils/nft'
 
 const walletStore = useWalletStore()

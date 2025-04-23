@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useWalletStore } from '@/stores/useWallet'
+import { useWalletStore } from '@/stores/walletStore'
 
 const walletStore = useWalletStore()
 const { publicKey } = storeToRefs(walletStore)

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useWalletStore } from '@/stores/useWallet'
+import { useWalletStore } from '@/stores/walletStore'
 import { shortenAddress } from '@/utils/nft'
 
 const walletStore = useWalletStore()

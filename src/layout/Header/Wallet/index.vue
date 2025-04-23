@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useWalletStore } from '@/stores/useWallet'
+import { useWalletStore } from '@/stores/walletStore'
 import WalletConnect from '@/components/WalletConnect.vue'
 import NftSearch from '@/components/NftSearch.vue'
 
