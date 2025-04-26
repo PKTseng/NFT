@@ -9,17 +9,22 @@ const routes = [
       {
         path: '',
         name: 'default',
-        redirect: '/browse',
+        redirect: '/home',
       },
       {
-        path: '/browse',
-        name: 'browse',
-        component: () => import('@/views/Browse.vue'), // NFT 列表
+        path: '/home',
+        name: 'home',
+        component: () => import('@/views/Home.vue'),
+      },
+      {
+        path: '/nft-list',
+        name: 'nft-list',
+        component: () => import('@/views/NftList.vue'),
       },
       {
         path: '/nft/:id',
         name: 'nft-detail',
-        component: () => import('@/views/NftDetail.vue'), // NFT 詳情頁
+        component: () => import('@/views/NftDetail.vue'),
       },
       {
         path: '/my-nfts',
@@ -29,7 +34,7 @@ const routes = [
       {
         path: '/mint',
         name: 'mint',
-        component: () => import('@/views/Mint.vue'), // NFT 鑄造頁
+        component: () => import('@/views/Mint.vue'),
       },
     ],
   },
