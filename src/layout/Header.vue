@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-blue-900 text-white shadow">
+  <header class="fixed top-0 left-0 right-0 bg-blue-900 text-white shadow z-10">
     <div class="flex justify-between items-center px-4 py-4 md:px-6">
       <!-- 左側區塊：Logo + 桌面導覽列 -->
       <div class="flex items-center">
@@ -88,7 +88,7 @@ const isMenuOpen = ref(false)
 const networkStore = useNetworkStore()
 
 const navLinks = [
-  { path: '/browse', label: 'NFT 瀏覽' },
+  { path: '/nft-list', label: 'NFT 瀏覽' },
   { path: '/my-nfts', label: '我的 NFT' },
   { path: '/mint', label: '創建 NFT' },
   // { path: '/about', label: '關於' },
