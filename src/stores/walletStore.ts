@@ -55,27 +55,6 @@ export const useWalletStore = defineStore('wallet', () => {
     }
   }
 
-  // 檢查並自動連接先前已授權的錢包
-  const checkAndConnectWallet = async () => {
-    try {
-      const { solana } = window as any
-
-      if (!solana?.isPhantom) {
-        return
-      }
-
-      const isAuthorized = await solana?.isConnected
-
-      if (isAuthorized) {
-        const response = await solana.connect({ onlyIfTrusted: true })
-        publicKey.value = response.publicKey
-        await fetchBalance()
-      }
-    } catch (error) {
-      console.error('檢查錢包連接失敗:', error)
-    }
-  }
-
   return {
     connection,
     publicKey,
@@ -84,6 +63,5 @@ export const useWalletStore = defineStore('wallet', () => {
     connectWallet,
     disconnectWallet,
     fetchBalance,
-    checkAndConnectWallet,
   }
 })
