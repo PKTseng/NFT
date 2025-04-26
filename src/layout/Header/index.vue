@@ -45,11 +45,6 @@
             </div>
           </button>
         </div>
-
-        <!-- Wallet (Desktop) -->
-        <div class="hidden md:block ml-2 tex-right">
-          <Wallet />
-        </div>
       </div>
     </div>
 
@@ -80,15 +75,12 @@
           </div>
         </button>
       </div>
-
-      <Wallet />
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Wallet from './Wallet/index.vue'
 import { useNetworkStore } from '@/stores/networkStore'
 import { reconfigureAxios } from '@/utils/request'
 
@@ -96,10 +88,10 @@ const isMenuOpen = ref(false)
 const networkStore = useNetworkStore()
 
 const navLinks = [
-  { path: '/creator', label: '創作者作品' },
-  // { path: '/series', label: '系列分類' },
-  { path: '/mint', label: 'Mint NFT' },
-  // { path: '/manage', label: '販售管理' },
+  { path: '/browse', label: 'NFT 瀏覽' },
+  { path: '/my-nfts', label: '我的 NFT' },
+  { path: '/mint', label: '創建 NFT' },
+  // { path: '/about', label: '關於' },
 ]
 
 // 處理網絡切換並重新配置 axios
