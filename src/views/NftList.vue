@@ -30,9 +30,7 @@
           <p class="text-gray-600">Collection: {{ asset.grouping?.[0]?.collection_metadata?.name || 'N/A' }}</p>
 
           <!-- 擁有者地址 -->
-          <p class="text-gray-600">
-            Owner: {{ asset.ownership.owner.slice(0, 4) }}...{{ asset.ownership.owner.slice(-4) }}
-          </p>
+          <p class="text-gray-600">Owner: {{ shortenAddress(asset.ownership.owner) }}</p>
 
           <!-- 分潤比例 -->
           <p v-if="asset.royalty?.percent" class="text-gray-600">
@@ -55,7 +53,7 @@ import { ref, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGetAssetsByOwner } from '@/hooks/UseGetAssetsByOwner'
 
-import { getImageUrl, formatRoyaltyPercent } from '@/utils/nft'
+import { getImageUrl, formatRoyaltyPercent, shortenAddress } from '@/utils/nft'
 import type { NftItem } from '@/types/assetsByOwner'
 import Pagination from '@/components/Pagination.vue'
 import NftSearch from '@/components/NftSearch.vue'
