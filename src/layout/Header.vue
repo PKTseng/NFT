@@ -89,7 +89,7 @@ const networkStore = useNetworkStore()
 
 const navLinks = [
   { path: '/nft-list', label: 'NFT 瀏覽' },
-  { path: '/my-nfts', label: '我的 NFT' },
+  // { path: '/my-nfts', label: '我的 NFT' },
   { path: '/mint', label: '創建 NFT' },
   // { path: '/about', label: '關於' },
 ]

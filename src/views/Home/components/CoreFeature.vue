@@ -1,5 +1,5 @@
 <template>
-  <!-- 修改後的 核心功能區域 -->
+  <!-- 核心功能區域 -->
   <section class="py-20 space-y-16">
     <div class="text-center space-y-4">
       <h2 class="text-3xl font-bold text-white">
